@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import java8.music.Album;
 import java8.music.Track;
 
-public class Reactor {
+public class Refactor {
 
 	public Set<String> oldFindLongTracks(List<Album> albums) {
 	    Set<String> trackNames = new HashSet<>();
@@ -25,10 +25,11 @@ public class Reactor {
 	
 	public Set<String> findLongTracks(List<Album> albums) {
 		return albums.stream()
-			.flatMap(album -> album.getTracks())
-			.filter(track -> track.getLength() > 60)
-			.map(track -> track.getName())
-			.collect(Collectors.toSet());
+				.map(album -> album.getTrackList())
+				.flatMap(trackList -> trackList.stream())
+				.filter(track -> track.getLength() > 60)
+				.map(track -> track.getName())
+				.collect(Collectors.toSet());
 	}
 	
 }
